@@ -1,6 +1,6 @@
-# 🌾 Smart Crop Disease Detection System
+# 🌾 Leaf Kabiraj - AI Crop Disease Detection System
 
-An AI-powered web application built with Django that detects crop diseases from leaf images using deep learning. Designed to assist farmers and agricultural professionals with quick and accurate disease identification and recommendations.
+An AI-powered web application built with Django that detects crop diseases from leaf images using deep learning. Developed by Md Obaydullah Al Numan.
 
 ---
 
@@ -161,14 +161,12 @@ docker-compose up --build
 Contributions are welcome! Please fork the repo and submit a pull request.
 
 📜 License
-MIT License © HARSH GANGWAR
+MIT License © 2026 Md Obaydullah Al Numan
 
-📧 Contact
-Author: HARSH GANGWAR
-
-Email: hgangwar07@gmail.com
-
-LinkedIn: www.linkedin.com/in/harshgangwar07
+📧 Project Metadata
+Author: Md Obaydullah Al Numan
+Technical Help: Square Private Center, Gabtali
+🌐 Repository: https://github.com/NUMAN-Obaydullah/leaf-kabiraj.git
 
 
 
