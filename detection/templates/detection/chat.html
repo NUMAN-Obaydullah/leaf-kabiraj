@@ -1,0 +1,436 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}AI Chat Assistant - Leaf Kabiraj{% endblock %}
+
+{% block content %}
+<style>
+    /* Chat View Styling */
+    .chat-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+        height: calc(100vh - 180px);
+        min-height: 550px;
+    }
+    @media (min-width: 768px) {
+        .chat-layout {
+            grid-template-columns: 320px 1fr;
+        }
+    }
+    
+    .chat-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        height: 100%;
+    }
+    .chat-tips-card {
+        padding: 1.5rem;
+        background: var(--color-card-dark);
+        border: 1px solid var(--color-card-border);
+        border-radius: var(--border-radius-md);
+        backdrop-filter: blur(12px);
+    }
+    
+    .chat-main {
+        display: flex;
+        flex-direction: column;
+        background: var(--color-card-dark);
+        border: 1px solid var(--color-card-border);
+        border-radius: var(--border-radius-lg);
+        backdrop-filter: blur(16px);
+        overflow: hidden;
+        height: 100%;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .chat-header {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--color-card-border);
+        background: rgba(16, 185, 129, 0.05);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    .chat-header-dot {
+        width: 10px;
+        height: 10px;
+        background-color: var(--color-primary);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--color-primary);
+        animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+        0% { opacity: 0.4; }
+        50% { opacity: 1; }
+        100% { opacity: 0.4; }
+    }
+    
+    .chat-messages {
+        flex: 1;
+        padding: 1.5rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        scroll-behavior: smooth;
+    }
+    
+    /* Scrollbar Styling */
+    .chat-messages::-webkit-scrollbar {
+        width: 6px;
+    }
+    .chat-messages::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+    
+    .chat-bubble {
+        max-width: 80%;
+        padding: 1rem 1.25rem;
+        border-radius: var(--border-radius-md);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        animation: bubbleFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        word-wrap: break-word;
+    }
+    @keyframes bubbleFadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .chat-bubble-user {
+        align-self: flex-end;
+        background: var(--color-primary-dark);
+        color: #FFFFFF;
+        border: 1px solid var(--color-primary);
+        border-bottom-right-radius: 4px;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    }
+    .chat-bubble-bot {
+        align-self: flex-start;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--color-text-primary);
+        border: 1px solid var(--color-card-border);
+        border-bottom-left-radius: 4px;
+    }
+    
+    .chat-input-area {
+        padding: 1.25rem;
+        border-top: 1px solid var(--color-card-border);
+        background: rgba(10, 15, 13, 0.9);
+    }
+    .chat-form {
+        display: flex;
+        gap: 0.75rem;
+    }
+    .chat-input {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--color-card-border);
+        border-radius: var(--border-radius-sm);
+        padding: 0.85rem 1rem;
+        color: #FFFFFF;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        transition: var(--transition-smooth);
+    }
+    .chat-input:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 0 10px var(--color-primary-glow);
+    }
+    
+    .chat-btn-send {
+        background: var(--color-primary);
+        color: #FFFFFF;
+        border: none;
+        border-radius: var(--border-radius-sm);
+        padding: 0 1.5rem;
+        cursor: pointer;
+        font-weight: 600;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    .chat-btn-send:hover {
+        background: var(--color-primary-dark);
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    }
+    
+    /* Typing Indicator Loader */
+    .typing-indicator {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 20px;
+    }
+    .typing-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--color-text-secondary);
+        border-radius: 50%;
+        animation: typingBounce 1.4s infinite ease-in-out both;
+    }
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes typingBounce {
+        0%, 80%, 100% { transform: scale(0); }
+        40% { transform: scale(1.0); }
+    }
+    
+    .suggestion-item {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--color-card-border);
+        border-radius: var(--border-radius-sm);
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        text-align: left;
+    }
+    .suggestion-item:hover {
+        background: rgba(16, 185, 129, 0.05);
+        color: var(--color-primary-light);
+        border-color: rgba(16, 185, 129, 0.2);
+    }
+</style>
+
+<div class="chat-layout">
+    <!-- Left Sidebar: Suggestion prompts -->
+    <div class="chat-sidebar">
+        <div class="chat-tips-card">
+            <h3 style="font-size: 1.15rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                🌾 <span class="lang-toggle-en">Try Asking These</span><span class="lang-toggle-bn" style="display:none;">জিজ্ঞাসা করে দেখুন</span>
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--color-text-secondary); margin-bottom: 1.25rem;">
+                <span class="lang-toggle-en">Click any question below to immediately ask our agricultural AI assistant:</span>
+                <span class="lang-toggle-bn" style="display:none;">নিচের যেকোনো প্রশ্নে ক্লিক করে সরাসরি এআই ডাক্তারের সাহায্য নিন:</span>
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <button class="suggestion-item" onclick="useSuggestion(this)">
+                    <span class="lang-toggle-en">How to treat Tomato Early Blight organically?</span>
+                    <span class="lang-toggle-bn" style="display:none;">টমেটোর আর্লি ব্লাইট রোগের জৈব প্রতিকার কী?</span>
+                </button>
+                <button class="suggestion-item" onclick="useSuggestion(this)">
+                    <span class="lang-toggle-en">What is companion planting for tomatoes?</span>
+                    <span class="lang-toggle-bn" style="display:none;">টমেটো চাষে সহচর উদ্ভিদ রোপণের নিয়ম কী?</span>
+                </button>
+                <button class="suggestion-item" onclick="useSuggestion(this)">
+                    <span class="lang-toggle-en">How can I make natural compost at home?</span>
+                    <span class="lang-toggle-bn" style="display:none;">কীভাবে বাড়িতে জৈব কম্পোস্ট সার তৈরি করব?</span>
+                </button>
+                <button class="suggestion-item" onclick="useSuggestion(this)">
+                    <span class="lang-toggle-en">Why do potato leaves turn yellow and drop?</span>
+                    <span class="lang-toggle-bn" style="display:none;">আলুর পাতা হলুদ হয়ে ঝরে যাওয়ার কারণ কী?</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Interactive Chat -->
+    <div class="chat-main">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-header-dot"></div>
+            <div>
+                <h3 style="font-size: 1.1rem; line-height: 1.2;">
+                    <span class="lang-toggle-en">AI Crop Doctor</span>
+                    <span class="lang-toggle-bn" style="display:none;">এআই ফসল ডাক্তার</span>
+                </h3>
+                <span style="font-size: 0.75rem; color: var(--color-text-secondary);">
+                    <span class="lang-toggle-en">Online Agricultural Consultant</span>
+                    <span class="lang-toggle-bn" style="display:none;">অনলাইন কৃষি পরামর্শক</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Chat messages view -->
+        <div class="chat-messages" id="chat-messages-container">
+            <!-- Initial Bot Message -->
+            <div class="chat-bubble chat-bubble-bot">
+                <span class="lang-toggle-en">Hello! I am your AI Agricultural Doctor. Ask me anything about crop diseases, organic remedies, soil fertilizer management, or crop planting guidelines. How can I help you today?</span>
+                <span class="lang-toggle-bn" style="display:none;">হ্যালো! আমি আপনার এআই উদ্ভিদ ডাক্তার। শস্যের রোগ বা প্রতিকার, মাটির সার ব্যবস্থাপনা কিংবা ফসল রোপণের যেকোনো নির্দেশিকা সম্পর্কে আমাকে প্রশ্ন করতে পারেন। আজ কীভাবে সাহায্য করতে পারি?</span>
+            </div>
+        </div>
+
+        <!-- Input Box Area -->
+        <div class="chat-input-area">
+            <form class="chat-form" id="chat-submit-form" onsubmit="handleChatSubmit(event)">
+                {% csrf_token %}
+                <input type="text" class="chat-input" id="chat-user-input" 
+                       placeholder="আপনার কৃষি বিষয়ক প্রশ্নটি এখানে লিখুন..." 
+                       autocomplete="off" required>
+                <button type="submit" class="chat-btn-send" id="chat-btn-submit">
+                    <span class="lang-toggle-en">Send</span>
+                    <span class="lang-toggle-bn" style="display:none;">পাঠান</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 2px;">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Maintain local conversation history array
+    const chatHistory = [];
+
+    // Helper to extract CSRF token dynamically
+    function getCSRFToken() {
+        const tokenInput = document.querySelector('[name=csrfmiddlewaretoken]');
+        return tokenInput ? tokenInput.value : '';
+    }
+
+    // Scroll chat stream automatically to the bottom
+    function scrollToBottom() {
+        const container = document.getElementById('chat-messages-container');
+        if (container) {
+            container.scrollTop = container.scrollHeight;
+        }
+    }
+
+    // Insert user suggestion dynamically
+    function useSuggestion(button) {
+        // Look for the active language span content
+        const lang = localStorage.getItem('leaf_kabiraj_lang') || 'bn';
+        const targetClass = lang === 'en' ? '.lang-toggle-en' : '.lang-toggle-bn';
+        const span = button.querySelector(targetClass);
+        if (span) {
+            const inputField = document.getElementById('chat-user-input');
+            if (inputField) {
+                inputField.value = span.textContent.trim();
+                inputField.focus();
+            }
+        }
+    }
+
+    // Format newlines into HTML breaks
+    function formatMessageText(text) {
+        if (!text) return '';
+        // Convert basic formatting like markdown stars to strong, and double breaks to paragraph breaks
+        let formatted = text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/\n/g, '<br>');
+        return formatted;
+    }
+
+    // Handles submitting a new chat message
+    async function handleChatSubmit(event) {
+        event.preventDefault();
+        
+        const inputField = document.getElementById('chat-user-input');
+        const submitBtn = document.getElementById('chat-btn-submit');
+        const container = document.getElementById('chat-messages-container');
+        
+        if (!inputField || !submitBtn || !container) return;
+        
+        const messageText = inputField.value.trim();
+        if (!messageText) return;
+        
+        // 1. Render User message in the stream
+        const userBubble = document.createElement('div');
+        userBubble.className = 'chat-bubble chat-bubble-user';
+        userBubble.textContent = messageText;
+        container.appendChild(userBubble);
+        
+        // Clear input and focus
+        inputField.value = '';
+        inputField.disabled = true;
+        submitBtn.disabled = true;
+        scrollToBottom();
+        
+        // 2. Render typing indicator bubble
+        const typingBubble = document.createElement('div');
+        typingBubble.className = 'chat-bubble chat-bubble-bot';
+        typingBubble.id = 'chat-typing-loader';
+        
+        const indicator = document.createElement('div');
+        indicator.className = 'typing-indicator';
+        for (let i = 0; i < 3; i++) {
+            const dot = document.createElement('span');
+            dot.className = 'typing-dot';
+            indicator.appendChild(dot);
+        }
+        typingBubble.appendChild(indicator);
+        container.appendChild(typingBubble);
+        scrollToBottom();
+        
+        // 3. Make AJAX post call to backend API
+        try {
+            const response = await fetch("{% url 'chat_api' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCSRFToken()
+                },
+                body: JSON.stringify({
+                    message: messageText,
+                    history: chatHistory
+                })
+            });
+            
+            // Remove loader
+            const loader = document.getElementById('chat-typing-loader');
+            if (loader) loader.remove();
+            
+            if (response.status === 200) {
+                const data = await response.json();
+                const botReply = data.reply || '';
+                
+                // Render Bot response bubble
+                const botBubble = document.createElement('div');
+                botBubble.className = 'chat-bubble chat-bubble-bot';
+                botBubble.innerHTML = formatMessageText(botReply);
+                container.appendChild(botBubble);
+                
+                // Add to local history list
+                chatHistory.push({
+                    user: messageText,
+                    bot: botReply
+                });
+            } else {
+                throw new Error("Server error");
+            }
+        } catch (error) {
+            console.error("Chat Error:", error);
+            const loader = document.getElementById('chat-typing-loader');
+            if (loader) loader.remove();
+            
+            const errorBubble = document.createElement('div');
+            errorBubble.className = 'chat-bubble chat-bubble-bot';
+            errorBubble.style.borderColor = 'var(--color-danger)';
+            errorBubble.style.color = 'var(--color-danger)';
+            
+            const currentLang = localStorage.getItem('leaf_kabiraj_lang') || 'bn';
+            errorBubble.textContent = currentLang === 'en' 
+                ? "⚠️ Connection error. Please verify your internet or local LLM server is active." 
+                : "⚠️ সংযোগ ত্রুটি। দয়া করে আপনার ইন্টারনেট অথবা লোকাল এআই সার্ভার চালু রয়েছে কি না তা নিশ্চিত করুন।";
+            
+            container.appendChild(errorBubble);
+        } finally {
+            inputField.disabled = false;
+            submitBtn.disabled = false;
+            inputField.focus();
+            scrollToBottom();
+        }
+    }
+</script>
+{% endblock %}

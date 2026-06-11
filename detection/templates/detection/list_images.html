@@ -1,0 +1,107 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Scan History Log - Leaf Kabiraj{% endblock %}
+
+{% block content %}
+<div class="history-container">
+    <!-- Header with interactive search filter -->
+    <div class="history-header">
+        <div>
+            <h1 style="font-size: 2.25rem; margin-bottom: 0.5rem;" data-translate-key="hist_title">Scan History</h1>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem;" data-translate-key="hist_desc">Review and filter past leaf scans and diagnosis results.</p>
+        </div>
+        <div class="history-filters">
+            <!-- Search field value mapping needs translation or custom placeholder -->
+            <input type="text" id="history-search" class="history-search-input" placeholder="🔍 Filter by crop or disease..." data-translate-key="hist_search">
+        </div>
+    </div>
+
+    <!-- Cards Grid -->
+    {% if images %}
+        <div class="history-grid" id="history-grid">
+            {% for image in images %}
+                <div class="history-card" data-prediction="{{ image.predicted_label|default:'' }}">
+                    <!-- Leaf Thumbnail -->
+                    <img src="{{ image.image.url }}" class="history-card-img" alt="Leaf Scan" loading="lazy">
+                    
+                    <div class="history-card-body">
+                        <div>
+                            <!-- Formatted Prediction Label -->
+                            <h3 class="history-card-title formatted-label prediction-translate-target">
+                                {% if image.predicted_label %}
+                                    {{ image.predicted_label }}
+                                {% else %}
+                                    Processing Error
+                                {% endif %}
+                            </h3>
+                            
+                            <!-- Date info -->
+                            <div class="history-card-meta">
+                                <span data-translate-key="hist_scanned">Scanned</span>: {{ image.date_uploaded|date:"d M Y H:i" }}
+                            </div>
+                        </div>
+
+                        <!-- Card Footer containing Confidence metrics -->
+                        <div class="history-card-footer">
+                            {% if image.confidence_score %}
+                                <div class="history-card-confidence">
+                                    {{ image.confidence_score|floatformat:1 }}% <span data-translate-key="hist_match">Match</span>
+                                </div>
+                            {% else %}
+                                <div style="color: var(--color-danger); font-size: 0.85rem; font-weight: 600;" data-translate-key="hist_no_score">
+                                    No Score
+                                </div>
+                            {% endif %}
+                            <a href="{% url 'upload_success' image.id %}" class="btn btn-secondary btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" data-translate-key="btn_details">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Empty State Container -->
+        <div class="glass-card" style="text-align: center; padding: 4rem 2rem; max-width: 500px; margin: 3rem auto;">
+            <svg viewBox="0 0 24 24" width="60" height="60" stroke="var(--color-text-secondary)" stroke-width="1.5" fill="none" style="margin-bottom: 1.5rem; opacity: 0.5;">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <h3 style="margin-bottom: 0.75rem;" data-translate-key="empty_title">No Scans Yet</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: 2rem; font-size: 0.95rem;" data-translate-key="empty_desc">You haven't uploaded any leaf images for analysis yet. Your history log is empty.</p>
+            <a href="{% url 'upload_leaf_image' %}" class="btn btn-primary" data-translate-key="btn_diag_first">Diagnose First Leaf</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_body %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Real-time Search Filtering
+        const searchInput = document.getElementById('history-search');
+        const grid = document.getElementById('history-grid');
+        
+        if (searchInput && grid) {
+            const cards = grid.querySelectorAll('.history-card');
+            
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                
+                cards.forEach(card => {
+                    const labelText = card.querySelector('.formatted-label').textContent.toLowerCase();
+                    const rawText = card.getAttribute('data-prediction').toLowerCase();
+                    
+                    if (labelText.includes(query) || rawText.includes(query)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

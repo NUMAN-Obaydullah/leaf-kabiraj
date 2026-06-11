@@ -1,0 +1,171 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Diagnosis Result - Leaf Kabiraj{% endblock %}
+
+{% block content %}
+<div class="result-container">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <div class="hero-badge" data-translate-key="report_badge">Analysis Completed</div>
+        <h1 style="font-size: 2.25rem;" data-translate-key="report_title">Diagnostic Report</h1>
+    </div>
+
+    <!-- Glassmorphic Dashboard Card -->
+    <div class="glass-card" style="padding: 2.5rem;">
+        {% if prediction %}
+            <div class="result-layout">
+                <!-- Left Column: Image with health color border -->
+                <div class="result-image-panel">
+                    <div class="result-image-frame {% if 'healthy' in prediction|lower %}healthy{% else %}diseased{% endif %}">
+                        {% if leaf.image %}
+                            <img src="{{ leaf.image.url }}" alt="Diagnosed Leaf Image">
+                        {% else %}
+                            <div style="padding: 3rem; text-align: center; color: var(--color-text-secondary);">No image file found</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Right Column: AI Verdict Metrics -->
+                <div class="result-details-panel">
+                    <!-- Health Badge -->
+                    {% if 'healthy' in prediction|lower %}
+                        <div class="result-status-badge healthy" data-translate-key="status_healthy">
+                            🟢 Plant is Healthy
+                        </div>
+                    {% else %}
+                        <div class="result-status-badge diseased" data-translate-key="status_diseased">
+                            ⚠️ Issue Detected
+                        </div>
+                    {% endif %}
+
+                    <!-- Display Formatted Diagnosis Label -->
+                    <h2 class="result-title" id="display-verdict">{{ prediction }}</h2>
+
+                    <!-- Confidence Rating bar -->
+                    <div class="confidence-bar-wrapper">
+                        <div class="confidence-label">
+                            <span data-translate-key="confidence_title">Confidence Level</span>
+                            <span>{{ confidence|floatformat:1 }}%</span>
+                        </div>
+                        <div class="confidence-bar-bg">
+                            <div class="confidence-bar-fill" id="confidence-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Explanatory Text -->
+                    <p style="color: var(--color-text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        <span data-translate-key="explain_p1">Our Deep Learning Classifier studied the shapes, contours, and color hues on this leaf. It matches the symptoms of</span> 
+                        <strong><span id="clean-verdict" class="prediction-translate-target">{{ prediction }}</span></strong> 
+                        <span data-translate-key="explain_p2">with a reliability rating of</span> {{ confidence|floatformat:1 }}%.
+                    </p>
+
+                    <!-- Buttons -->
+                    <div class="result-actions">
+                        <a href="{% url 'upload_leaf_image' %}" class="btn btn-primary" id="btn-diagnose-new" data-translate-key="btn_diag_new">
+                            Diagnose New Leaf
+                        </a>
+                        <a href="{% url 'leaf_image_list' %}" class="btn btn-secondary" id="btn-view-history" data-translate-key="btn_history">
+                            View History Log
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Remedies Recommendation Panel (Outside the columns) -->
+            {% if remedy_details %}
+                <div class="remedies-section">
+                    <!-- Section 1: Leaf Condition Description -->
+                    <div class="glass-card" style="padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--color-primary);">
+                        <h3 style="color: var(--color-primary-light); font-size: 1.15rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                            📝 <span data-translate-key="desc_section_title">Leaf Condition Analysis</span>
+                        </h3>
+                        
+                        <p class="lang-toggle-en" style="font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;">
+                            {{ remedy_details.description_en }}
+                        </p>
+                        <p class="lang-toggle-bn" style="font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6; display: none;">
+                            {{ remedy_details.description_bn }}
+                        </p>
+                    </div>
+
+                    <div class="remedies-row">
+                        <!-- Section 2: Actionable Home Remedies -->
+                        <div class="glass-card" style="flex: 1; padding: 1.5rem; margin-bottom: 0; border-left: 4px solid var(--color-secondary);">
+                            <h3 style="color: var(--color-primary-light); font-size: 1.15rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                                🌱 <span data-translate-key="remedy_title">Organic Remedies & Care</span>
+                            </h3>
+                            
+                            <ul class="lang-toggle-en" style="list-style: none; padding-left: 0; margin-top: 0.5rem;">
+                                {% for remedy in remedy_details.remedies_en %}
+                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.88rem; line-height: 1.5;">
+                                        <span style="color: var(--color-primary); font-size: 1.1rem; line-height: 1;">🌱</span>
+                                        <span>{{ remedy }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="lang-toggle-bn" style="list-style: none; padding-left: 0; margin-top: 0.5rem; display: none;">
+                                {% for remedy in remedy_details.remedies_bn %}
+                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.88rem; line-height: 1.5;">
+                                        <span style="color: var(--color-primary); font-size: 1.1rem; line-height: 1;">🌱</span>
+                                        <span>{{ remedy }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <!-- Section 3: Prevention & Protection -->
+                        <div class="glass-card" style="flex: 1; padding: 1.5rem; margin-bottom: 0; border-left: 4px solid #F59E0B;">
+                            <h3 style="color: var(--color-primary-light); font-size: 1.15rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                                🛡️ <span data-translate-key="prevention_title">Prevention & Protection</span>
+                            </h3>
+                            
+                            <ul class="lang-toggle-en" style="list-style: none; padding-left: 0; margin-top: 0.5rem;">
+                                {% for prevention in remedy_details.preventions_en %}
+                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.88rem; line-height: 1.5;">
+                                        <span style="color: #F59E0B; font-size: 1.1rem; line-height: 1;">🛡️</span>
+                                        <span>{{ prevention }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="lang-toggle-bn" style="list-style: none; padding-left: 0; margin-top: 0.5rem; display: none;">
+                                {% for prevention in remedy_details.preventions_bn %}
+                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.88rem; line-height: 1.5;">
+                                        <span style="color: #F59E0B; font-size: 1.1rem; line-height: 1;">🛡️</span>
+                                        <span>{{ prevention }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <!-- Error Fallback -->
+            <div style="text-align: center; padding: 2rem;">
+                <svg viewBox="0 0 24 24" width="48" height="48" stroke="var(--color-danger)" stroke-width="2" fill="none" style="margin-bottom: 1rem;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <h3 style="margin-bottom: 0.5rem;" data-translate-key="fail_title">Prediction Failed</h3>
+                <p style="color: var(--color-text-secondary); margin-bottom: 1.5rem;" data-translate-key="fail_desc">We couldn't process the leaf photo. Please make sure the file is a valid image and try again.</p>
+                <a href="{% url 'upload_leaf_image' %}" class="btn btn-primary" data-translate-key="btn_try_again">Try Again</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_body %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Trigger confidence bar animation
+        setTimeout(() => {
+            const fillBar = document.getElementById('confidence-fill');
+            if (fillBar) {
+                fillBar.style.width = "{{ confidence }}%";
+            }
+        }, 150);
+    });
+</script>
+{% endblock %}

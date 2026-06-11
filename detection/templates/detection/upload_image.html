@@ -1,0 +1,54 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Diagnose Crop Disease - Leaf Kabiraj{% endblock %}
+
+{% block content %}
+<div class="upload-wrapper">
+    <div style="text-align: center; margin-bottom: 2.5rem;">
+        <h1 style="font-size: 2.25rem; margin-bottom: 0.75rem;" data-translate-key="upload_title">Disease Detector</h1>
+        <p style="color: var(--color-text-secondary); font-size: 0.95rem;" data-translate-key="upload_desc">Upload a leaf photo below. Our neural network will analyze it for signs of infection.</p>
+    </div>
+
+    <!-- Drag & Drop Upload Card -->
+    <div class="glass-card" style="padding: 2.5rem;">
+        <form method="POST" enctype="multipart/form-data" id="upload-form">
+            {% csrf_token %}
+            
+            <!-- Hide the default input using absolute positioning off-screen -->
+            <div style="position: absolute; left: -9999px; overflow: hidden; width: 1px; height: 1px;">
+                {{ form.image }}
+            </div>
+
+            <!-- Custom Drag & Drop Zone -->
+            <div class="upload-dropzone" id="upload-dropzone">
+                <svg class="upload-icon" id="upload-icon" viewBox="0 0 24 24">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #FFFFFF;" data-translate-key="drop_title">Drag & Drop Leaf Photo</h3>
+                <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom: 1.5rem;" data-translate-key="drop_desc">Or click here to browse files on your device</p>
+                <div class="file-info" id="file-name-display" data-translate-key="file_default">No file selected</div>
+            </div>
+
+            <!-- Action buttons -->
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 1rem;" id="btn-submit-upload" data-translate-key="btn_submit">
+                    Start AI Diagnosis
+                </button>
+                <a href="{% url 'manual' %}" class="btn btn-secondary" style="width: 100%; font-size: 0.9rem;" id="btn-view-tips" data-translate-key="btn_tips">
+                    📖 Read Photo Tips (How to get accurate results)
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Full screen Loading Overlay Spinner -->
+<div class="loading-overlay" id="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text" data-translate-key="loading_text">Analyzing Leaf Patterns...</div>
+    <div style="color: var(--color-text-secondary); font-size: 0.85rem; margin-top: 0.5rem;" data-translate-key="loading_sub">Running deep learning classification</div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+# Python
+*.pyc
+__pycache__/
+
+# Virtual Environment
+smart_crop_env/
+smart_crop_newversion_env/
+
+# Django DB
+db.sqlite3
+
+# Logs
+*.log
+
+# Media files
+/media/
+smart_crop/settings_local.py
+
+#adding .env to gitignore
+.env
+
+
+*.h5

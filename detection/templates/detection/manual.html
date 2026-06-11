@@ -1,0 +1,180 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}User Manual - How to Detect Crop Diseases{% endblock %}
+
+{% block content %}
+<div class="manual-container">
+    <!-- Manual Page Header -->
+    <div style="text-align: center; margin-bottom: 3.5rem;">
+        <div class="hero-badge">
+            <span class="lang-toggle-en">Step-by-Step Guide</span>
+            <span class="lang-toggle-bn" style="display:none;">ধাপ-বাই-ধাপ নির্দেশিকা</span>
+        </div>
+        <h1 style="font-size: 2.75rem; margin-bottom: 1rem;">
+            <span class="lang-toggle-en">How to Detect Diseases</span>
+            <span class="lang-toggle-bn" style="display:none;">কীভাবে রোগ সনাক্ত করবেন</span>
+        </h1>
+        <p style="font-size: 1.1rem; color: var(--color-text-secondary); max-width: 650px; margin: 0 auto;">
+            <span class="lang-toggle-en">Follow these simple steps to snap the perfect leaf photo for our AI scanner. A clear photo ensures our digital plant doctor gives you the most accurate results!</span>
+            <span class="lang-toggle-bn" style="display:none;">আমাদের এআই স্ক্যানারের জন্য পাতার নিখুঁত ছবি তুলতে এই সহজ ধাপগুলো অনুসরণ করুন। একটি পরিষ্কার ছবি আমাদের ডিজিটাল উদ্ভিদ ডাক্তারকে সঠিক ফলাফল দিতে সাহায্য করে!</span>
+        </p>
+    </div>
+
+    <!-- Steps Grid -->
+    <div class="manual-steps-grid" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3.5rem;">
+        <!-- Step 1 -->
+        <div class="glass-card step-card" style="display: flex; gap: 1.5rem; padding: 2rem; align-items: flex-start;">
+            <div class="step-number" style="background: var(--color-primary-dark); color: #FFFFFF; border: 2px solid var(--color-primary); width: 3.5rem; height: 3.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.5rem; font-weight: 800; flex-shrink: 0; box-shadow: 0 0 15px var(--color-primary-glow);">1</div>
+            <div class="step-card-content">
+                <h3 style="margin-bottom: 0.5rem; font-size: 1.25rem;">
+                    <span class="lang-toggle-en">Select the Leaf</span>
+                    <span class="lang-toggle-bn" style="display:none;">পাতা নির্বাচন করুন</span>
+                </h3>
+                <p class="lang-toggle-en" style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    <strong>Leaf Audition:</strong> Look for a single leaf that clearly shows signs of sickness (like weird spots, fuzzy white mold, or yellowing edges). It's like picking the main character for our AI's diagnostic scanner. Try to select a leaf that is easy to separate from surrounding branches!
+                </p>
+                <p class="lang-toggle-bn" style="display:none; color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    <strong>পাতার অডিশন:</strong> এমন একটি পাতা খুঁজে বের করুন যাতে রোগের লক্ষণ (যেমন অদ্ভুত দাগ, ধূসর বা সাদা ছাতা বা হলুদ হয়ে যাওয়া কিনার) স্পষ্টভাবে দেখা যাচ্ছে। এটি যেন আমাদের এআই স্ক্যানারের জন্য প্রধান চরিত্র! পাতাটি যেন আশেপাশের ডালপালা বা অন্য পাতা থেকে সহজেই আলাদা করা যায়।
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass-card step-card" style="display: flex; gap: 1.5rem; padding: 2rem; align-items: flex-start;">
+            <div class="step-number" style="background: var(--color-primary-dark); color: #FFFFFF; border: 2px solid var(--color-primary); width: 3.5rem; height: 3.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.5rem; font-weight: 800; flex-shrink: 0; box-shadow: 0 0 15px var(--color-primary-glow);">2</div>
+            <div class="step-card-content">
+                <h3 style="margin-bottom: 0.5rem; font-size: 1.25rem;">
+                    <span class="lang-toggle-en">Optimize Lighting</span>
+                    <span class="lang-toggle-bn" style="display:none;">আলোর মান ঠিক করুন</span>
+                </h3>
+                <p class="lang-toggle-en" style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    <strong>Stage Lighting:</strong> Bright, indirect daylight is your best friend! Avoid taking pictures in pitch darkness, under blinding direct sun glare, or using a phone flash that washes out natural leaf textures. Good lighting helps the AI read the exact shades of colors.
+                </p>
+                <p class="lang-toggle-bn" style="display:none; color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    <strong>স্টেজ লাইটিং:</strong> দিনের উজ্জ্বল ও স্বাভাবিক আলোই ছবি তোলার জন্য সেরা! ঘুটঘুটে অন্ধকার, অতিরিক্ত চোখ ধাঁধানো রোদ বা মোবাইলের ফ্ল্যাশ লাইট ব্যবহার এড়িয়ে চলুন যা পাতার স্বাভাবিক গঠনকে আড়াল করে। ভালো আলো এআই-কে সঠিক রঙের পার্থক্য বুঝতে সাহায্য করে।
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass-card step-card" style="display: flex; gap: 1.5rem; padding: 2rem; align-items: flex-start;">
+            <div class="step-number" style="background: var(--color-primary-dark); color: #FFFFFF; border: 2px solid var(--color-primary); width: 3.5rem; height: 3.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.5rem; font-weight: 800; flex-shrink: 0; box-shadow: 0 0 15px var(--color-primary-glow);">3</div>
+            <div class="step-card-content">
+                <h3 style="margin-bottom: 0.5rem; font-size: 1.25rem;">
+                    <span class="lang-toggle-en">Focus & Snap</span>
+                    <span class="lang-toggle-bn" style="display:none;">ফোকাস ও ছবি তুলুন</span>
+                </h3>
+                <p class="lang-toggle-en" style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    <strong>Laser Focus:</strong> Hold your phone steady and keep it about 10-15 cm away from the leaf. Tap your screen to lock the focus so that all the fine textures, veins, and spots are razor-sharp. If the picture is blurry, the AI's virtual brain cells will get confused!
+                </p>
+                <p class="lang-toggle-bn" style="display:none; color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    <strong>লেজার ফোকাস:</strong> আপনার ফোনটি স্থির রাখুন এবং পাতাটি থেকে প্রায় ১০-১৫ সেমি দূরে ধরুন। স্ক্রিনে ট্যাপ করে ফোকাস লক করুন যাতে পাতার সূক্ষ্ম শিরা, গঠন এবং দাগগুলো একদম স্পষ্ট ও নিখুঁত দেখায়। ছবিটি ঝাপসা হলে এআই-এর ভার্চুয়াল মস্তিষ্ক বিভ্রান্ত হতে পারে!
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="glass-card step-card" style="display: flex; gap: 1.5rem; padding: 2rem; align-items: flex-start;">
+            <div class="step-number" style="background: var(--color-primary-dark); color: #FFFFFF; border: 2px solid var(--color-primary); width: 3.5rem; height: 3.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.5rem; font-weight: 800; flex-shrink: 0; box-shadow: 0 0 15px var(--color-primary-glow);">4</div>
+            <div class="step-card-content">
+                <h3 style="margin-bottom: 0.5rem; font-size: 1.25rem;">
+                    <span class="lang-toggle-en">Upload & Analyze</span>
+                    <span class="lang-toggle-bn" style="display:none;">আপলোড ও রোগ সনাক্তকরণ</span>
+                </h3>
+                <p class="lang-toggle-en" style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    <strong>Launch the Scanner:</strong> Go to the Detect page, drag your leaf photo into the drop-zone (or tap to browse files), and click "Start AI Diagnosis". Within seconds, our deep learning engine and agricultural LLM will generate a custom diagnostic health report!
+                </p>
+                <p class="lang-toggle-bn" style="display:none; color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    <strong>স্ক্যানার চালু করুন:</strong> রোগ সনাক্তকরণ পেজে যান, আপনার পাতার ছবিটি ড্রপ-জোনে টেনে আনুন বা সিলেক্ট করুন এবং "এআই সনাক্তকরণ শুরু করুন" বাটনে ক্লিক করুন। মাত্র কয়েক সেকেন্ডের মধ্যে আমাদের ডিপ লার্নিং ক্লাসিফায়ার এবং এআই ডাক্তার (LLM) আপনার জন্য রোগ এবং তার জৈব সমাধান খুঁজে বের করবে!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOs & DON'Ts Comparison Box -->
+    <div class="glass-card" style="margin-bottom: 4rem; padding: 2.5rem;">
+        <h2 style="text-align: center; font-size: 1.75rem; margin-bottom: 2rem; border-bottom: 1px solid var(--color-card-border); padding-bottom: 1rem;">
+            <span class="lang-toggle-en">Photography Do's & Don'ts</span>
+            <span class="lang-toggle-bn" style="display:none;">ছবি তোলার সঠিক ও ভুল নিয়ম</span>
+        </h2>
+        
+        <div class="guidelines-comparison" style="display: grid; grid-template-columns: 1fr; gap: 2.5rem;">
+            <!-- DO Box -->
+            <div class="guide-box guide-box-do">
+                <h3 style="display: flex; align-items: center; gap: 0.5rem; color: var(--color-healthy); margin-bottom: 1.5rem;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span class="lang-toggle-en">What to Do (Success Tips)</span>
+                    <span class="lang-toggle-bn" style="display:none;">যা করতে হবে (সফলতা)</span>
+                </h3>
+                <ul class="guide-list guide-list-do" style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <span style="color: var(--color-healthy); font-weight: bold; font-size: 1.1rem; line-height: 1;">🟢</span>
+                        <span class="lang-toggle-en" style="font-size: 0.92rem; color: var(--color-text-secondary);"><strong>Keep it Flat:</strong> Hold the leaf flat or lay it down on a plain, neutral background (such as dirt, clean paper, or concrete) so the AI can easily detect the edges.</span>
+                        <span class="lang-toggle-bn" style="display:none; font-size: 0.92rem; color: var(--color-text-secondary);"><strong>সমতল ব্যাকগ্রাউন্ড:</strong> পাতাটি সমতলভাবে ধরুন বা একটি সাধারণ ব্যাকগ্রাউন্ডের (যেমন পরিষ্কার সাদা কাগজ, মাটি বা মেঝের) ওপর রাখুন যাতে এআই পাতার চারপাশ পরিষ্কারভাবে চিহ্নিত করতে পারে।</span>
+                    </li>
+                    <li style="margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <span style="color: var(--color-healthy); font-weight: bold; font-size: 1.1rem; line-height: 1;">🟢</span>
+                        <span class="lang-toggle-en" style="font-size: 0.92rem; color: var(--color-text-secondary);"><strong>One Leaf Star:</strong> Ensure only one leaf dominates the center of the photo. Multiple leaves will distract the neural network nodes!</span>
+                        <span class="lang-toggle-bn" style="display:none; font-size: 0.92rem; color: var(--color-text-secondary);"><strong>ছবির মূল আকর্ষণ:</strong> ছবির ঠিক মাঝখানে যেন একটিমাত্র পাতা স্পষ্ট থাকে। একের বেশি পাতা থাকলে আমাদের এআই নেটওয়ার্ক ভুল জায়গায় ফোকাস করতে পারে!</span>
+                    </li>
+                    <li style="margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <span style="color: var(--color-healthy); font-weight: bold; font-size: 1.1rem; line-height: 1;">🟢</span>
+                        <span class="lang-toggle-en" style="font-size: 0.92rem; color: var(--color-text-secondary);"><strong>Laser Focus:</strong> Keep the leaf in sharp, crisp focus. The AI needs to examine tiny details like fungal spots or bacterial lesions.</span>
+                        <span class="lang-toggle-bn" style="display:none; font-size: 0.92rem; color: var(--color-text-secondary);"><strong>শার্প ফোকাস:</strong> পাতাটিকে ছবিতে সম্পূর্ণ স্পষ্ট রাখুন। এআই-কে অত্যন্ত ছোট ছত্রাকের দাগ বা ব্যাকটিরিয়াল ক্ষতগুলো নিখুঁতভাবে পরীক্ষা করতে হয়।</span>
+                    </li>
+                    <li style="margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <span style="color: var(--color-healthy); font-weight: bold; font-size: 1.1rem; line-height: 1;">🟢</span>
+                        <span class="lang-toggle-en" style="font-size: 0.92rem; color: var(--color-text-secondary);"><strong>True Colors:</strong> Take photos in natural daylight. Accurate colors help tell the difference between yellow nutrient shortages and brown blight diseases.</span>
+                        <span class="lang-toggle-bn" style="display:none; font-size: 0.92rem; color: var(--color-text-secondary);"><strong>আসল রঙ:</strong> প্রাকৃতিক আলোতে ছবি তুলুন। পাতার সঠিক রঙ এআই-কে হলুদ পুষ্টির অভাব এবং ক্ষতিকারক বাদামী ধসা রোগের মধ্যে পার্থক্য বুঝতে সাহায্য করে।</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- DONT Box -->
+            <div class="guide-box guide-box-dont">
+                <h3 style="display: flex; align-items: center; gap: 0.5rem; color: var(--color-danger); margin-bottom: 1.5rem;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    <span class="lang-toggle-en">What to Avoid (Mistakes)</span>
+                    <span class="lang-toggle-bn" style="display:none;">যা এড়িয়ে চলতে হবে (ভুলসমূহ)</span>
+                </h3>
+                <ul class="guide-list guide-list-dont" style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <span style="color: var(--color-danger); font-weight: bold; font-size: 1.1rem; line-height: 1;">🔴</span>
+                        <span class="lang-toggle-en" style="font-size: 0.92rem; color: var(--color-text-secondary);"><strong>No Hand Covers:</strong> Do not block or cover leaf spots, margins, or details with your fingers or hand while holding it.</span>
+                        <span class="lang-toggle-bn" style="display:none; font-size: 0.92rem; color: var(--color-text-secondary);"><strong>আঙুল দিয়ে ঢাকা:</strong> পাতাটি ধরার সময় আপনার আঙুল বা হাত দিয়ে পাতার দাগ অথবা চারপাশ ঢেকে রাখবেন না। এআই-এর পুরো পাতার গঠন দেখতে হয়।</span>
+                    </li>
+                    <li style="margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <span style="color: var(--color-danger); font-weight: bold; font-size: 1.1rem; line-height: 1;">🔴</span>
+                        <span class="lang-toggle-en" style="font-size: 0.92rem; color: var(--color-text-secondary);"><strong>No Landscapes:</strong> Do not take a photo of the entire plant or multiple branches from far away. The AI needs a leaf close-up!</span>
+                        <span class="lang-toggle-bn" style="display:none; font-size: 0.92rem; color: var(--color-text-secondary);"><strong>দূর থেকে পুরো গাছ:</strong> দূর থেকে পুরো গাছ বা ডালপালার ছবি তুলবেন না। এআই-এর সঠিকভাবে রোগ সনাক্ত করতে পাতার একটি স্পষ্ট ক্লোজ-আপ প্রয়োজন।</span>
+                    </li>
+                    <li style="margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <span style="color: var(--color-danger); font-weight: bold; font-size: 1.1rem; line-height: 1;">🔴</span>
+                        <span class="lang-toggle-en" style="font-size: 0.92rem; color: var(--color-text-secondary);"><strong>No Camera Shakes:</strong> Avoid shaky hands or taking photos while moving. Blurry images smudge textures, making detection fail.</span>
+                        <span class="lang-toggle-bn" style="display:none; font-size: 0.92rem; color: var(--color-text-secondary);"><strong>ঝাপসা ছবি:</strong> হাত কাঁপানো অবস্থায় বা হাঁটার সময় ছবি তোলা এড়ান। ঝাপসা ছবিতে পাতার রোগ সনাক্তকরণ ব্যর্থ হতে পারে।</span>
+                    </li>
+                    <li style="margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <span style="color: var(--color-danger); font-weight: bold; font-size: 1.1rem; line-height: 1;">🔴</span>
+                        <span class="lang-toggle-en" style="font-size: 0.92rem; color: var(--color-text-secondary);"><strong>No Glare/Darkness:</strong> Avoid heavy sun glares reflecting off glossy leaves or taking photos in pitch-black environments.</span>
+                        <span class="lang-toggle-bn" style="display:none; font-size: 0.92rem; color: var(--color-text-secondary);"><strong>তীব্র আলো বা অন্ধকার:</strong> পাতার ওপর রোদের সরাসরি আলোর প্রতিফলন (চকচক করা) বা অতিরিক্ত অন্ধকার জায়গায় ছবি তোলা এড়িয়ে চলুন।</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CTA Button -->
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <a href="{% url 'upload_leaf_image' %}" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem;">
+            <span class="lang-toggle-en">Ready? Start Diagnosing</span>
+            <span class="lang-toggle-bn" style="display:none;">রোগ সনাক্ত করা শুরু করুন</span>
+        </a>
+    </div>
+</div>
+{% endblock %}

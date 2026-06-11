@@ -1,0 +1,180 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Leaf Kabiraj - AI Plant Disease Diagnosis{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-text">
+        <div class="hero-badge" data-translate-key="hero_badge">AI-Powered Agriculture</div>
+        <h1 data-translate-key="hero_title">Empower Your Crop Management</h1>
+        <p data-translate-key="hero_desc">Leaf Kabiraj is a digital agricultural assistant designed to instantly detect diseases in plant leaves. Simply snap a picture of a leaf to identify issues and access treatment tips instantly.</p>
+        <div class="hero-ctas">
+            <a href="{% url 'upload_leaf_image' %}" class="btn btn-primary" id="btn-hero-detect">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span data-translate-key="btn_hero_detect">Diagnose Leaf Now</span>
+            </a>
+            <a href="{% url 'how_it_works' %}" class="btn btn-secondary" id="btn-hero-education" data-translate-key="btn_hero_education">
+                How It Works
+            </a>
+        </div>
+    </div>
+    
+    <div class="hero-visual">
+        <div class="visual-sphere"></div>
+        <!-- High-tech CSS stylized leaf icon frame -->
+        <div class="glass-card" style="position: relative; width: 300px; height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: var(--border-radius-lg); border: 2px solid var(--color-primary);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 100px; height: 100px; filter: drop-shadow(0 0 15px rgba(16,185,129,0.5)); animation: pulse-glow 2s infinite alternate;">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 1.5 5-2.2 9.8A7 7 0 0 1 11 20z"></path>
+                <path d="M9 22v-4.1"></path>
+                <path d="M12.2 13.8L19 7"></path>
+            </svg>
+            <div style="margin-top: 1.5rem; text-align: center;">
+                <div style="font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem; color: #FFFFFF;" data-translate-key="ai_engine_title">AI Diagnostic Engine</div>
+                <div style="font-size: 0.8rem; color: var(--color-primary-light); margin-top: 0.25rem;" data-translate-key="ai_engine_sub">Active & Ready</div>
+            </div>
+            
+            <!-- Scanning lines animation -->
+            <div style="position: absolute; left: 0; width: 100%; height: 2px; background: linear-gradient(to right, transparent, var(--color-primary), transparent); animation: scan-line 3s linear infinite; box-shadow: 0 0 8px var(--color-primary);"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Scanning animation keyframes -->
+<style>
+@keyframes scan-line {
+    0% { top: 10%; }
+    50% { top: 90%; }
+    100% { top: 10%; }
+}
+</style>
+
+<!-- Key Platform Capabilities Grid -->
+<section style="margin-bottom: 6rem;">
+    <h2 class="section-title"><span data-translate-key="why_use_title_1">Why Use</span> <span data-translate-key="why_use_title_2" style="color: var(--color-primary);">Leaf Kabiraj</span>?</h2>
+    
+    <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="glass-card feature-card">
+            <div class="feature-icon-wrapper">
+                <svg class="feature-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+            </div>
+            <h3 data-translate-key="instant_diag_title">Instant Diagnosis</h3>
+            <p data-translate-key="instant_diag_desc">Our deep learning algorithm analyzes leaf images in under two seconds, helping you take fast action to save your crops.</p>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="glass-card feature-card">
+            <div class="feature-icon-wrapper">
+                <svg class="feature-icon" viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+            <h3 data-translate-key="crops_supp_title">14+ Crops Supported</h3>
+            <p data-translate-key="crops_supp_desc">Trained on thousands of real-world leaf samples, including tomatoes, potatoes, apples, corn, grapes, and more.</p>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="glass-card feature-card">
+            <div class="feature-icon-wrapper">
+                <svg class="feature-icon" viewBox="0 0 24 24">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    <line x1="12" y1="11" x2="12" y2="17"></line>
+                    <line x1="9" y1="14" x2="15" y2="14"></line>
+                </svg>
+            </div>
+            <h3 data-translate-key="history_track_title">History Tracking</h3>
+            <p data-translate-key="history_track_desc">Sign up or log in to keep a historical log of all your crop scans, monitoring disease outbreaks across seasons.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Supported Crops Section -->
+<section class="crops-section">
+    <h2 class="section-title"><span data-translate-key="plants_we_title_1">Plants We Can</span> <span data-translate-key="plants_we_title_2" style="color: var(--color-primary);">Diagnose</span></h2>
+    <p class="crops-intro" data-translate-key="plants_we_desc">Our computer vision model recognizes 38 different health and disease categories across a wide range of common crops.</p>
+    
+    <div class="crops-grid">
+        <!-- Tomato -->
+        <div class="crop-card">
+            <div class="crop-avatar">🍅</div>
+            <div class="crop-name" data-translate-key="crop_tomato">Tomato</div>
+            <div class="crop-count" data-translate-key="tomato_cond">10 Conditions</div>
+        </div>
+        <!-- Potato -->
+        <div class="crop-card">
+            <div class="crop-avatar">🥔</div>
+            <div class="crop-name" data-translate-key="crop_potato">Potato</div>
+            <div class="crop-count" data-translate-key="potato_cond">3 Conditions</div>
+        </div>
+        <!-- Corn -->
+        <div class="crop-card">
+            <div class="crop-avatar">🌽</div>
+            <div class="crop-name" data-translate-key="crop_corn">Corn / Maize</div>
+            <div class="crop-count" data-translate-key="corn_cond">4 Conditions</div>
+        </div>
+        <!-- Apple -->
+        <div class="crop-card">
+            <div class="crop-avatar">🍎</div>
+            <div class="crop-name" data-translate-key="crop_apple">Apple</div>
+            <div class="crop-count" data-translate-key="apple_cond">4 Conditions</div>
+        </div>
+        <!-- Grape -->
+        <div class="crop-card">
+            <div class="crop-avatar">🍇</div>
+            <div class="crop-name" data-translate-key="crop_grape">Grape</div>
+            <div class="crop-count" data-translate-key="grape_cond">4 Conditions</div>
+        </div>
+        <!-- Peach -->
+        <div class="crop-card">
+            <div class="crop-avatar">🍑</div>
+            <div class="crop-name" data-translate-key="crop_peach">Peach</div>
+            <div class="crop-count" data-translate-key="peach_cond">2 Conditions</div>
+        </div>
+        <!-- Bell Pepper -->
+        <div class="crop-card">
+            <div class="crop-avatar">🫑</div>
+            <div class="crop-name" data-translate-key="crop_bell_pepper">Bell Pepper</div>
+            <div class="crop-count" data-translate-key="bell_pepper_cond">2 Conditions</div>
+        </div>
+        <!-- Strawberry -->
+        <div class="crop-card">
+            <div class="crop-avatar">🍓</div>
+            <div class="crop-name" data-translate-key="crop_strawberry">Strawberry</div>
+            <div class="crop-count" data-translate-key="strawberry_cond">2 Conditions</div>
+        </div>
+        <!-- Orange -->
+        <div class="crop-card">
+            <div class="crop-avatar">🍊</div>
+            <div class="crop-name" data-translate-key="crop_orange">Orange</div>
+            <div class="crop-count" data-translate-key="orange_cond">Citrus Greening</div>
+        </div>
+        <!-- Cherry -->
+        <div class="crop-card">
+            <div class="crop-avatar">🍒</div>
+            <div class="crop-name" data-translate-key="crop_cherry">Cherry</div>
+            <div class="crop-count" data-translate-key="cherry_cond">2 Conditions</div>
+        </div>
+        <!-- Squash -->
+        <div class="crop-card">
+            <div class="crop-avatar">🍃</div>
+            <div class="crop-name" data-translate-key="crop_squash">Squash</div>
+            <div class="crop-count" data-translate-key="squash_cond">Powdery Mildew</div>
+        </div>
+        <!-- Blueberry -->
+        <div class="crop-card">
+            <div class="crop-avatar">🫐</div>
+            <div class="crop-name" data-translate-key="crop_blueberry">Blueberry</div>
+            <div class="crop-count" data-translate-key="blueberry_cond">Healthy</div>
+        </div>
+    </div>
+</section>
+{% endblock %}
