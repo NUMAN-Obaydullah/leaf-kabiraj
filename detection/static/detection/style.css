@@ -1284,3 +1284,89 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+/* Interactive Crop Info Modal */
+.crop-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 10, 8, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.crop-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.crop-modal-card {
+    max-width: 480px;
+    width: 90%;
+    position: relative;
+    padding: 2.5rem;
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 15px 45px rgba(16, 185, 129, 0.25);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    border-radius: var(--border-radius-lg);
+    background: var(--color-card-dark);
+}
+
+.crop-modal-overlay.active .crop-modal-card {
+    transform: scale(1);
+}
+
+.crop-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 2.25rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.crop-modal-close:hover {
+    color: var(--color-danger);
+}
+
+.crop-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-card-border);
+    padding-bottom: 1.25rem;
+}
+
+.crop-modal-emoji {
+    font-size: 3.5rem;
+    line-height: 1;
+}
+
+.crop-modal-count {
+    font-size: 0.85rem;
+    color: var(--color-primary-light);
+    font-weight: 700;
+    background: var(--color-primary-glow);
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    display: inline-block;
+    margin-top: 0.25rem;
+}
+
+/* Cursor pointer on crop cards */
+.crop-card {
+    cursor: pointer;
+}
+

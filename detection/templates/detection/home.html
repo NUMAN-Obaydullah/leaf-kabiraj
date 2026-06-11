@@ -104,77 +104,94 @@
     
     <div class="crops-grid">
         <!-- Tomato -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="tomato">
             <div class="crop-avatar">🍅</div>
             <div class="crop-name" data-translate-key="crop_tomato">Tomato</div>
             <div class="crop-count" data-translate-key="tomato_cond">10 Conditions</div>
         </div>
         <!-- Potato -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="potato">
             <div class="crop-avatar">🥔</div>
             <div class="crop-name" data-translate-key="crop_potato">Potato</div>
             <div class="crop-count" data-translate-key="potato_cond">3 Conditions</div>
         </div>
         <!-- Corn -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="corn">
             <div class="crop-avatar">🌽</div>
             <div class="crop-name" data-translate-key="crop_corn">Corn / Maize</div>
             <div class="crop-count" data-translate-key="corn_cond">4 Conditions</div>
         </div>
         <!-- Apple -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="apple">
             <div class="crop-avatar">🍎</div>
             <div class="crop-name" data-translate-key="crop_apple">Apple</div>
             <div class="crop-count" data-translate-key="apple_cond">4 Conditions</div>
         </div>
         <!-- Grape -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="grape">
             <div class="crop-avatar">🍇</div>
             <div class="crop-name" data-translate-key="crop_grape">Grape</div>
             <div class="crop-count" data-translate-key="grape_cond">4 Conditions</div>
         </div>
         <!-- Peach -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="peach">
             <div class="crop-avatar">🍑</div>
             <div class="crop-name" data-translate-key="crop_peach">Peach</div>
             <div class="crop-count" data-translate-key="peach_cond">2 Conditions</div>
         </div>
         <!-- Bell Pepper -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="bell_pepper">
             <div class="crop-avatar">🫑</div>
             <div class="crop-name" data-translate-key="crop_bell_pepper">Bell Pepper</div>
             <div class="crop-count" data-translate-key="bell_pepper_cond">2 Conditions</div>
         </div>
         <!-- Strawberry -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="strawberry">
             <div class="crop-avatar">🍓</div>
             <div class="crop-name" data-translate-key="crop_strawberry">Strawberry</div>
             <div class="crop-count" data-translate-key="strawberry_cond">2 Conditions</div>
         </div>
         <!-- Orange -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="orange">
             <div class="crop-avatar">🍊</div>
             <div class="crop-name" data-translate-key="crop_orange">Orange</div>
             <div class="crop-count" data-translate-key="orange_cond">Citrus Greening</div>
         </div>
         <!-- Cherry -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="cherry">
             <div class="crop-avatar">🍒</div>
             <div class="crop-name" data-translate-key="crop_cherry">Cherry</div>
             <div class="crop-count" data-translate-key="cherry_cond">2 Conditions</div>
         </div>
         <!-- Squash -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="squash">
             <div class="crop-avatar">🍃</div>
             <div class="crop-name" data-translate-key="crop_squash">Squash</div>
             <div class="crop-count" data-translate-key="squash_cond">Powdery Mildew</div>
         </div>
         <!-- Blueberry -->
-        <div class="crop-card">
+        <div class="crop-card" data-crop-id="blueberry">
             <div class="crop-avatar">🫐</div>
             <div class="crop-name" data-translate-key="crop_blueberry">Blueberry</div>
             <div class="crop-count" data-translate-key="blueberry_cond">Healthy</div>
         </div>
     </div>
 </section>
+
+<!-- Beautiful Interactive Modal for Crop Information -->
+<div id="crop-modal" class="crop-modal-overlay" onclick="handleModalOverlayClick(event)">
+    <div class="crop-modal-card glass-card">
+        <button class="crop-modal-close" onclick="closeCropModal()">&times;</button>
+        <div class="crop-modal-header">
+            <span class="crop-modal-emoji" id="modal-crop-emoji">🍅</span>
+            <div>
+                <h2 id="modal-crop-name" style="font-size: 1.75rem; margin-bottom: 0.25rem;">Tomato</h2>
+                <span class="crop-modal-count" id="modal-crop-count">10 Conditions</span>
+            </div>
+        </div>
+        <div class="crop-modal-body">
+            <p id="modal-crop-info" style="font-size: 1.05rem; line-height: 1.7; color: var(--color-text-primary);"></p>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -610,4 +610,220 @@ document.addEventListener('DOMContentLoaded', () => {
         pulseLayers();
         setInterval(pulseLayers, 2000);
     }
+
+    // 5. Interactive Crop Card Click Details Modal
+    const cropCards = document.querySelectorAll('.crop-card');
+    cropCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const cropId = card.getAttribute('data-crop-id');
+            if (cropId) {
+                openCropModal(cropId);
+            }
+        });
+    });
+
+    // Support Escape key to close modal
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeCropModal();
+        }
+    });
 });
+
+// Interactive crop cards data dictionary for school kids
+const cropDetailsData = {
+    tomato: {
+        emoji: "🍅",
+        en: {
+            name: "Tomato",
+            count: "10 Conditions",
+            info: "Tomatoes are delicious red fruits packed with Vitamin C and Lycopene. Although used as a vegetable in cooking, botanically it is a berry fruit!"
+        },
+        bn: {
+            name: "টমেটো",
+            count: "১০টি রোগ ও অবস্থা",
+            info: "টমেটো হলো ভিটামিন সি এবং লাইকোপিন সমৃদ্ধ একটি সুস্বাদু লাল ফল। রান্নায় সবজি হিসেবে ব্যবহার করা হলেও উদ্ভিদের পরিভাষায় এটি আসলে একটি ফল!"
+        }
+    },
+    potato: {
+        emoji: "🥔",
+        en: {
+            name: "Potato",
+            count: "3 Conditions",
+            info: "Potatoes are starchy tubers grown underground. They are the world's fourth largest food crop and are incredibly versatile for making fries and snacks!"
+        },
+        bn: {
+            name: "আলু",
+            count: "৩টি রোগ ও অবস্থা",
+            info: "আলু হলো মাটির নিচে জন্ম নেওয়া শর্করাসমৃদ্ধ টিউবার। এটি বিশ্বের চতুর্থ বৃহত্তম খাদ্য ফসল এবং চিপস বা ফ্রেঞ্চ ফ্রাই তৈরির জন্য খুবই জনপ্রিয়!"
+        }
+    },
+    corn: {
+        emoji: "🌽",
+        en: {
+            name: "Corn / Maize",
+            count: "4 Conditions",
+            info: "Corn is a cereal grain native to the Americas. An ear of corn always has an even number of rows, usually 16, and is a great source of fiber!"
+        },
+        bn: {
+            name: "ভুট্টা",
+            count: "৪টি রোগ ও অবস্থা",
+            info: "ভুট্টা হলো আমেরিকার ঐতিহ্যবাহী একটি দানা শস্য। একটি ভুট্টার মোচায় সবসময় জোড় সংখ্যার সারি থাকে (সাধারণত ১৬টি) এবং এটি আঁশের চমৎকার উৎস!"
+        }
+    },
+    apple: {
+        emoji: "🍎",
+        en: {
+            name: "Apple",
+            count: "4 Conditions",
+            info: "Apples are crisp, sweet orchard fruits. An apple tree can live for over 100 years, and apples float in water because 25% of their volume is air!"
+        },
+        bn: {
+            name: "আপেল",
+            count: "৪টি রোগ ও অবস্থা",
+            info: "আপেল হলো মিষ্টি ও সুস্বাদু ফল। একটি আপেল গাছ ১০০ বছরেরও বেশি বাঁচতে পারে এবং আপেলের ২৫% অংশ বাতাস থাকায় এরা পানিতে ভাসে!"
+        }
+    },
+    grape: {
+        emoji: "🍇",
+        en: {
+            name: "Grape",
+            count: "4 Conditions",
+            info: "Grapes are juicy berries growing in clusters. They are used to make raisins, juices, and jellies. Grapes come in green, red, black, and yellow!"
+        },
+        bn: {
+            name: "আঙুর",
+            count: "৪টি রোগ ও অবস্থা",
+            info: "আঙুর হলো থোকায় থোকায় জন্মানো রসালো ফল। এগুলো দিয়ে কিশমিশ, জুস ও জেলি তৈরি করা হয়। আঙুর সবুজ, লাল, কালো ও হলুদ রঙের হয়!"
+        }
+    },
+    peach: {
+        emoji: "🍑",
+        en: {
+            name: "Peach",
+            count: "2 Conditions",
+            info: "Peaches are fuzzy-skinned stone fruits originating in China. They symbolize longevity and good luck, and have a sweet, aromatic flavor!"
+        },
+        bn: {
+            name: "পিচ",
+            count: "২টি রোগ ও অবস্থা",
+            info: "পিচ ফল হলো নরম চামড়ার সুস্বাদু রসালো ফল যার উৎপত্তি চীনে। পিচ ফল দীর্ঘায়ু ও সৌভাগ্যের প্রতীক এবং এটি খুব মিষ্টি ও সুগন্ধযুক্ত!"
+        }
+    },
+    bell_pepper: {
+        emoji: "🫑",
+        en: {
+            name: "Bell Pepper",
+            count: "2 Conditions",
+            info: "Bell peppers are colorful, crunchy fruits that can be green, yellow, orange, or red. Red bell peppers are actually fully ripe green peppers!"
+        },
+        bn: {
+            name: "মিষ্টি মরিচ (ক্যাপসিকাম)",
+            count: "২টি রোগ ও অবস্থা",
+            info: "ক্যাপসিকাম বা মিষ্টি মরিচ হলো লাল, হলুদ বা সবুজ রঙের মচমচে ফল। লাল ক্যাপসিকাম মূলত সম্পূর্ণ পেকে যাওয়া সবুজ ক্যাপসিকাম!"
+        }
+    },
+    strawberry: {
+        emoji: "🍓",
+        en: {
+            name: "Strawberry",
+            count: "2 Conditions",
+            info: "Strawberries are bright red, juicy berries. They are the only fruit that wears their seeds on the outside—around 200 seeds per fruit!"
+        },
+        bn: {
+            name: "স্ট্রবেরি",
+            count: "২টি রোগ ও অবস্থা",
+            info: "স্ট্রবেরি হলো উজ্জ্বল লাল রঙের রসালো ফল। এটিই একমাত্র ফল যার বীজ ফলের বাইরে থাকে—প্রতিটি ফলে প্রায় ২০০টি বীজ থাকে!"
+        }
+    },
+    orange: {
+        emoji: "🍊",
+        en: {
+            name: "Orange",
+            count: "Citrus Greening",
+            info: "Oranges are sweet citrus fruits rich in Vitamin C. Orange trees are evergreen and their blossoms are white, smelling incredibly fresh and sweet!"
+        },
+        bn: {
+            name: "কমলা",
+            count: "সাইট্রাস গ্রীনিং রোগ",
+            info: "কমলা হলো ভিটামিন সি সমৃদ্ধ অত্যন্ত জনপ্রিয় সাইট্রাস ফল। কমলা গাছ চিরসবুজ এবং এর সাদা ফুলের সুবাস অত্যন্ত মিষ্টি ও তাজা!"
+        }
+    },
+    cherry: {
+        emoji: "🍒",
+        en: {
+            name: "Cherry",
+            count: "2 Conditions",
+            info: "Cherries are small, round, red stone fruits. They belong to the rose family and are packed with antioxidants that help you sleep better!"
+        },
+        bn: {
+            name: "চেরি",
+            count: "২টি রোগ ও অবস্থা",
+            info: "চেরি হলো ছোট, গোল ও লাল রঙের ফল। এটি গোলাপ গোত্রের উদ্ভিদ এবং এতে প্রচুর অ্যান্টিঅক্সিডেন্ট রয়েছে যা ভালো ঘুমাতে সাহায্য করে!"
+        }
+    },
+    squash: {
+        emoji: "🍃",
+        en: {
+            name: "Squash",
+            count: "Powdery Mildew",
+            info: "Squash belongs to the gourd family and includes pumpkins and zucchinis. They are technically fruits because they contain seeds!"
+        },
+        bn: {
+            name: "স্কোয়াশ",
+            count: "পাউডারি মিলডিউ রোগ",
+            info: "স্কোয়াশ হলো লাউ গোত্রের সবজি যা কুমড়া ও ধুন্দুলের সমগোত্রীয়। বীজ থাকার কারণে উদ্ভিদবিজ্ঞানের পরিভাষায় এটি আসলে একটি ফল!"
+        }
+    },
+    blueberry: {
+        emoji: "🫐",
+        en: {
+            name: "Blueberry",
+            count: "Healthy",
+            info: "Blueberries are small, sweet blue berries. They are native to North America and are a superfood packed with brain-boosting nutrients!"
+        },
+        bn: {
+            name: "ব্লুবেরি",
+            count: "সুস্থ ও রোগমুক্ত",
+            info: "ব্লুবেরি হলো ছোট ও মিষ্টি নীল রঙের ফল। এটি উত্তর আমেরিকার ফল এবং এটি মস্তিষ্কের কার্যক্ষমতা বৃদ্ধিকারী পুষ্টিগুণে ভরপুর একটি সুপারফুড!"
+        }
+    }
+};
+
+// Open crop details modal
+function openCropModal(cropId) {
+    const data = cropDetailsData[cropId];
+    if (!data) return;
+
+    const currentLang = localStorage.getItem('leaf_kabiraj_lang') || 'bn';
+    const langData = data[currentLang];
+
+    document.getElementById('modal-crop-emoji').textContent = data.emoji;
+    document.getElementById('modal-crop-name').textContent = langData.name;
+    document.getElementById('modal-crop-count').textContent = langData.count;
+    document.getElementById('modal-crop-info').textContent = langData.info;
+
+    const modal = document.getElementById('crop-modal');
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
+}
+
+// Close crop details modal
+function closeCropModal() {
+    const modal = document.getElementById('crop-modal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300);
+}
+
+// Close when clicking overlay backdrop
+function handleModalOverlayClick(event) {
+    if (event.target.id === 'crop-modal') {
+        closeCropModal();
+    }
+}
+
