@@ -7,7 +7,7 @@ This document is structured as a **Slide-by-Slide Presentation File**. It contai
 ## 📸 Slide 1: Welcome & Title Slide
 * **Slide Title:** Leaf Kabiraj (লিফ কবিরাজ)
 * **Slide Visuals:** 🍃 *Animated background of floating leaves, the Leaf Kabiraj brand logo, and the subtitle: "Your AI-Powered Plant Doctor".*
-* **Author Info:** Developed by Md. Obaydullah Al Numan.
+* **Author Info:** Developed by Md. Obaydullah Al Numan (Technical Help: Square Private Center, Gabtali).
 
 ### 🎤 English Speech (Speaker 1):
 > "Hello everyone! Welcome to our project demonstration. Today, we are very excited to present a digital solution designed to help our environment and support our farmers. Our project is called **'Leaf Kabiraj'** (The Leaf Doctor)—an AI-powered agricultural assistant that diagnoses plant diseases instantly from just a leaf photo!"
