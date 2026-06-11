@@ -41,6 +41,14 @@
                     <!-- Display Formatted Diagnosis Label -->
                     <h2 class="result-title" id="display-verdict">{{ prediction }}</h2>
 
+                    <!-- Clickable Info about the Crop/Fruit -->
+                    <div id="detected-crop-info-box" style="margin: 0.5rem 0 1.25rem 0; display: none;">
+                        <button class="btn btn-secondary btn-sm" id="btn-crop-info" style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; padding: 0.5rem 1rem; border-color: var(--color-primary); border-radius: var(--border-radius-sm); cursor: pointer;" onclick="showDetectedCropDetails()">
+                            <span id="detected-crop-emoji" style="font-size: 1.1rem;"></span> 
+                            <span id="detected-crop-text" style="font-weight: 700;">About Fruit</span>
+                        </button>
+                    </div>
+
                     <!-- Confidence Rating bar -->
                     <div class="confidence-bar-wrapper">
                         <div class="confidence-label">

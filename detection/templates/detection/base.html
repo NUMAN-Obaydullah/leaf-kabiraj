@@ -114,6 +114,23 @@
         </div>
     </footer>
 
+    <!-- Beautiful Interactive Modal for Crop Information -->
+    <div id="crop-modal" class="crop-modal-overlay" onclick="handleModalOverlayClick(event)">
+        <div class="crop-modal-card glass-card">
+            <button class="crop-modal-close" onclick="closeCropModal()">&times;</button>
+            <div class="crop-modal-header">
+                <span class="crop-modal-emoji" id="modal-crop-emoji">🍅</span>
+                <div>
+                    <h2 id="modal-crop-name" style="font-size: 1.75rem; margin-bottom: 0.25rem;">Tomato</h2>
+                    <span class="crop-modal-count" id="modal-crop-count">10 Conditions</span>
+                </div>
+            </div>
+            <div class="crop-modal-body">
+                <p id="modal-crop-info" style="font-size: 1.05rem; line-height: 1.7; color: var(--color-text-primary);"></p>
+            </div>
+        </div>
+    </div>
+
     <!-- Interactive Logic Script -->
     <script src="{% static 'detection/main.js' %}"></script>
     {% block extra_body %}{% endblock %}

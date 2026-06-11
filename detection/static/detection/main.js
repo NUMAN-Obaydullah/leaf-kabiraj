@@ -466,6 +466,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.style.display = el.tagName === 'SPAN' ? 'inline' : (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'UL' ? 'block' : '');
             });
         }
+
+        // 4. Translate detected crop button text if on success page
+        const infoBox = document.getElementById('detected-crop-info-box');
+        if (infoBox && infoBox.style.display !== 'none') {
+            const cropId = infoBox.getAttribute('data-detected-crop-id');
+            const cropTextSpan = document.getElementById('detected-crop-text');
+            if (cropId && cropTextSpan && cropDetailsData[cropId]) {
+                const cropData = cropDetailsData[cropId];
+                const langData = cropData[lang];
+                if (lang === 'bn') {
+                    cropTextSpan.textContent = `${langData.name} সম্পর্কে জানুন`;
+                } else {
+                    cropTextSpan.textContent = `About ${langData.name}`;
+                }
+            }
+        }
     }
 
     // 2. Mobile Menu Toggle
@@ -628,6 +644,40 @@ document.addEventListener('DOMContentLoaded', () => {
             closeCropModal();
         }
     });
+
+    // 6. Detected Crop Info Button Initialization (Success Page)
+    const verdictEl = document.getElementById('display-verdict');
+    if (verdictEl) {
+        const rawPrediction = verdictEl.textContent.trim();
+        const cropId = getCropIdFromPrediction(rawPrediction);
+        if (cropId && cropDetailsData[cropId]) {
+            const infoBox = document.getElementById('detected-crop-info-box');
+            const cropEmojiSpan = document.getElementById('detected-crop-emoji');
+            const cropTextSpan = document.getElementById('detected-crop-text');
+            
+            if (infoBox && cropEmojiSpan && cropTextSpan) {
+                const cropData = cropDetailsData[cropId];
+                cropEmojiSpan.textContent = cropData.emoji;
+                infoBox.setAttribute('data-detected-crop-id', cropId);
+                
+                // Expose global click handler for the button
+                window.showDetectedCropDetails = () => {
+                    openCropModal(cropId);
+                };
+                
+                // Initialize display language
+                const currentLang = localStorage.getItem('leaf_kabiraj_lang') || 'bn';
+                const langData = cropData[currentLang];
+                if (currentLang === 'bn') {
+                    cropTextSpan.textContent = `${langData.name} সম্পর্কে জানুন`;
+                } else {
+                    cropTextSpan.textContent = `About ${langData.name}`;
+                }
+                
+                infoBox.style.display = 'block';
+            }
+        }
+    }
 });
 
 // Interactive crop cards data dictionary for school kids
@@ -787,8 +837,55 @@ const cropDetailsData = {
             count: "সুস্থ ও রোগমুক্ত",
             info: "ব্লুবেরি হলো ছোট ও মিষ্টি নীল রঙের ফল। এটি উত্তর আমেরিকার ফল এবং এটি মস্তিষ্কের কার্যক্ষমতা বৃদ্ধিকারী পুষ্টিগুণে ভরপুর একটি সুপারফুড!"
         }
+    },
+    raspberry: {
+        emoji: "🍓",
+        en: {
+            name: "Raspberry",
+            count: "Healthy",
+            info: "Raspberries are delicious red aggregate fruits made of tiny individual drupelets. They are loaded with antioxidants and fiber!"
+        },
+        bn: {
+            name: "রাসবেরি",
+            count: "সুস্থ ও রোগমুক্ত",
+            info: "রাসবেরি হলো ছোট ছোট দানাদার অংশের সমন্বয়ে গঠিত একটি সুস্বাদু ফল। এটি অ্যান্টিঅক্সিডেন্ট ও আঁশ সমৃদ্ধ এবং এটি খেতে দারুণ মিষ্টি!"
+        }
+    },
+    soybean: {
+        emoji: "🫛",
+        en: {
+            name: "Soybean",
+            count: "Healthy",
+            info: "Soybeans are high-protein legumes native to East Asia. They are widely used to make foods like tofu, soy sauce, and soy milk!"
+        },
+        bn: {
+            name: "সয়াবিন",
+            count: "সুস্থ ও রোগমুক্ত",
+            info: "সয়াবিন হলো পূর্ব এশিয়ার একটি অত্যন্ত প্রোটিনসমৃদ্ধ শিম্বজাতীয় ফসল। এটি টফু, সয়া সস এবং সয়া দুধের মতো পুষ্টিকর খাবার তৈরিতে ব্যবহৃত হয়!"
+        }
     }
 };
+
+// Helper to extract crop ID from raw prediction label
+function getCropIdFromPrediction(predictionText) {
+    if (!predictionText) return null;
+    const lower = predictionText.toLowerCase().replace(/_/g, ' ').replace(/,/g, ' ');
+    if (lower.includes('tomato')) return 'tomato';
+    if (lower.includes('potato')) return 'potato';
+    if (lower.includes('corn') || lower.includes('maize')) return 'corn';
+    if (lower.includes('apple')) return 'apple';
+    if (lower.includes('grape')) return 'grape';
+    if (lower.includes('peach')) return 'peach';
+    if (lower.includes('pepper') && lower.includes('bell')) return 'bell_pepper';
+    if (lower.includes('strawberry')) return 'strawberry';
+    if (lower.includes('orange')) return 'orange';
+    if (lower.includes('cherry')) return 'cherry';
+    if (lower.includes('squash')) return 'squash';
+    if (lower.includes('blueberry')) return 'blueberry';
+    if (lower.includes('raspberry')) return 'raspberry';
+    if (lower.includes('soybean')) return 'soybean';
+    return null;
+}
 
 // Open crop details modal
 function openCropModal(cropId) {
