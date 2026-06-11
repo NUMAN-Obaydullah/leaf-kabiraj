@@ -9,29 +9,29 @@
     /* Color Palette */
     --color-primary: #10B981;        /* Emerald Green */
     --color-primary-dark: #065F46;   /* Dark Forest Green */
-    --color-primary-light: #A7F3D0;  /* Mint Light */
-    --color-primary-glow: rgba(16, 185, 129, 0.15);
+    --color-primary-light: #34D399;  /* Bright Mint */
+    --color-primary-glow: rgba(16, 185, 129, 0.22);
     
-    --color-secondary: #0D9488;      /* Teal */
-    --color-bg-dark: #0A0F0D;        /* Sleek Tech Background */
-    --color-card-dark: rgba(17, 24, 39, 0.75); /* Translucent Card */
-    --color-card-border: rgba(255, 255, 255, 0.08);
-    --color-text-primary: #F3F4F6;   /* Cool white/gray */
-    --color-text-secondary: #9CA3AF; /* Muted gray */
+    --color-secondary: #F59E0B;      /* Warm Gold/Amber */
+    --color-bg-dark: #07120E;        /* Cozy Forest Dark Green */
+    --color-card-dark: rgba(15, 30, 24, 0.85); /* Rich Leaf Card */
+    --color-card-border: rgba(16, 185, 129, 0.16);
+    --color-text-primary: #F0FDF4;   /* Minty White */
+    --color-text-secondary: #A7F3D0; /* Light Mint Green */
     
     /* Semantic Colors */
     --color-healthy: #10B981;
-    --color-healthy-bg: rgba(16, 185, 129, 0.1);
+    --color-healthy-bg: rgba(16, 185, 129, 0.15);
     --color-diseased: #F59E0B;
-    --color-diseased-bg: rgba(245, 158, 11, 0.1);
+    --color-diseased-bg: rgba(245, 158, 11, 0.15);
     --color-danger: #EF4444;
-    --color-danger-bg: rgba(239, 68, 68, 0.1);
+    --color-danger-bg: rgba(239, 68, 68, 0.15);
     
     /* Layout Details */
-    --border-radius-sm: 8px;
-    --border-radius-md: 16px;
-    --border-radius-lg: 24px;
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius-sm: 12px;
+    --border-radius-md: 20px;
+    --border-radius-lg: 28px;
+    --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Global Reset & Base Styles */
@@ -1237,3 +1237,50 @@ h1, h2, h3, h4, h5, h6 {
         margin-right: 1rem;
     }
 }
+
+/* Floating Leaves Animation for Kids/Demo Charm */
+.floating-leaves {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.leaf-particle {
+    position: absolute;
+    bottom: -50px;
+    font-size: 2rem;
+    opacity: 0.12;
+    animation: float-upwards 15s linear infinite;
+    user-select: none;
+}
+
+/* Different offsets and delays for leaf particles */
+.leaf-particle:nth-child(1) { left: 10%; animation-duration: 12s; animation-delay: 0s; font-size: 1.5rem; }
+.leaf-particle:nth-child(2) { left: 30%; animation-duration: 18s; animation-delay: 2s; font-size: 2rem; }
+.leaf-particle:nth-child(3) { left: 50%; animation-duration: 15s; animation-delay: 5s; font-size: 1.8rem; }
+.leaf-particle:nth-child(4) { left: 70%; animation-duration: 20s; animation-delay: 1s; font-size: 2.2rem; }
+.leaf-particle:nth-child(5) { left: 85%; animation-duration: 14s; animation-delay: 7s; font-size: 1.6rem; }
+.leaf-particle:nth-child(6) { left: 95%; animation-duration: 16s; animation-delay: 3s; font-size: 1.9rem; }
+
+@keyframes float-upwards {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.15;
+    }
+    90% {
+        opacity: 0.15;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
