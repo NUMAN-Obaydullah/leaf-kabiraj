@@ -148,7 +148,19 @@ const translations = {
         btn_details: "View Details",
         empty_title: "No Scans Yet",
         empty_desc: "You haven't uploaded any leaf images for analysis yet. Your history log is empty.",
-        btn_diag_first: "Diagnose First Leaf"
+        btn_diag_first: "Diagnose First Leaf",
+
+        // Auth Pages
+        login_title: "Sign In",
+        login_desc: "Access your account to save scans and track history.",
+        login_google_btn: "Sign in with Google",
+        login_or_divider: "OR",
+        login_submit_btn: "Sign In",
+        login_signup_link: "Create an Account",
+        signup_title: "Sign Up",
+        signup_desc: "Create an account to start tracking your crop diagnostic history.",
+        signup_submit_btn: "Sign Up",
+        signup_login_link: "Already Have an Account? Sign In"
     },
     bn: {
         // Navbar
@@ -298,7 +310,19 @@ const translations = {
         btn_details: "বিস্তারিত দেখুন",
         empty_title: "কোনো স্ক্যান রেকর্ড পাওয়া যায়নি",
         empty_desc: "আপনি এখনও কোনো পাতার ছবি পরীক্ষা করেননি। আপনার স্ক্যানের ইতিহাস এখানে জমা থাকবে।",
-        btn_diag_first: "প্রথম পাতাটি পরীক্ষা করুন"
+        btn_diag_first: "প্রথম পাতাটি পরীক্ষা করুন",
+
+        // Auth Pages
+        login_title: "লগইন করুন",
+        login_desc: "আপনার স্ক্যান রেকর্ড সংরক্ষণ এবং ব্যবহারের ইতিহাস দেখতে লগইন করুন।",
+        login_google_btn: "গুগল অ্যাকাউন্ট দিয়ে লগইন করুন",
+        login_or_divider: "অথবা",
+        login_submit_btn: "সাইন ইন করুন",
+        login_signup_link: "নতুন অ্যাকাউন্ট তৈরি করুন",
+        signup_title: "নিবন্ধন করুন",
+        signup_desc: "ফসল পরীক্ষা ও আগের স্ক্যানের রেকর্ড সংরক্ষণ করতে অ্যাকাউন্ট তৈরি করুন।",
+        signup_submit_btn: "অ্যাকাউন্ট তৈরি করুন",
+        signup_login_link: "ইতিমধ্যে অ্যাকাউন্ট আছে? সাইন ইন করুন"
     }
 };
 

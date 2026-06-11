@@ -1,0 +1,96 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block title %}{% trans "Sign Up" %} - Leaf Kabiraj{% endblock %}
+
+{% block content %}
+<div class="upload-wrapper" style="max-width: 480px; margin: 2rem auto; padding: 1rem 0;">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h1 style="font-size: 2.25rem; margin-bottom: 0.75rem;" data-translate-key="signup_title">Sign Up</h1>
+        <p style="color: var(--color-text-secondary); font-size: 0.95rem;" data-translate-key="signup_desc">Create an account to start tracking your crop diagnostic history.</p>
+    </div>
+
+    <!-- Glassmorphic Card -->
+    <div class="glass-card" style="padding: 2.5rem;">
+        <form class="signup" id="signup_form" method="POST" action="{% url 'account_signup' %}" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid var(--color-danger); border-radius: var(--border-radius-sm); padding: 0.75rem; color: #FFFFFF; font-size: 0.85rem; text-align: center;">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Field Inputs -->
+            {% for field in form %}
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <label for="{{ field.id_for_label }}" style="font-size: 0.9rem; font-weight: 600; color: #FFFFFF;">
+                        {{ field.label }}
+                    </label>
+                    
+                    <div class="custom-input-wrapper">
+                        {{ field }}
+                    </div>
+
+                    {% if field.help_text %}
+                        <span class="field-help-text" style="font-size: 0.78rem; color: var(--color-text-secondary); line-height: 1.4; opacity: 0.85;">
+                            {{ field.help_text|safe }}
+                        </span>
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <span style="color: var(--color-danger); font-size: 0.8rem;">
+                            {{ field.errors.0 }}
+                        </span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+
+            <!-- Action buttons -->
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 1rem;" data-translate-key="signup_submit_btn">
+                    Sign Up
+                </button>
+                <a href="{% url 'account_login' %}" class="btn btn-secondary" style="width: 100%; font-size: 0.9rem; text-align: center; border-radius: var(--border-radius-sm);" data-translate-key="signup_login_link">
+                    Already Have an Account? Sign In
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Styling form inputs inside allauth */
+    .custom-input-wrapper input {
+        width: 100%;
+        padding: 0.85rem 1.1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--color-card-border);
+        border-radius: var(--border-radius-sm);
+        color: #FFFFFF;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        transition: var(--transition-smooth);
+        outline: none;
+    }
+    .custom-input-wrapper input:focus {
+        border-color: var(--color-primary);
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 0 12px var(--color-primary-glow);
+    }
+    /* Style lists inside the help text if any */
+    .field-help-text ul {
+        list-style-position: inside;
+        margin-top: 0.25rem;
+        padding-left: 0.5rem;
+    }
+</style>
+{% endblock %}
